@@ -1,0 +1,48 @@
+<project name="PROG6112_Practical_Assignment_ST10093855" default="default" basedir=".">
+    <description>Builds, tests, and runs the project PROG6112_Practical_Assignment_ST10093855.</description>
+    
+    <!-- Import default build actions -->
+    <import file="nbproject/build-impl.xml"/>
+
+    <!-- Define the JUnit classpath using relative paths -->
+    <path id="junit-classpath">
+        <fileset dir="lib">
+            <include name="junit-jupiter-api-5.11.0.jar"/>
+            <include name="junit-jupiter-engine-5.11.0.jar"/>
+        </fileset>
+    </path>
+
+    <!-- Define the run.classpath -->
+    <path id="run.classpath">
+        <!-- Include the project's compiled classes -->
+        <pathelement location="${build.classes.dir}"/>
+        <!-- Include the libraries from the lib folder -->
+        <fileset dir="lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- Ensure that JUnit is used when running tests -->
+    <target name="-pre-compile-test">
+        <mkdir dir="${build.classes.dir}"/>
+    </target>
+
+    <target name="test" depends="compile">
+        <junit printsummary="yes" haltonfailure="yes">
+            <classpath>
+                <!-- Use the defined run.classpath -->
+                <path refid="run.classpath"/>
+                <!-- Add the JUnit classpath -->
+                <path refid="junit-classpath"/>
+            </classpath>
+            <!-- Define where the test classes are located -->
+            <batchtest>
+                <fileset dir="${build.test.classes.dir}">
+                    <include name="**/*Test*.class"/>
+                </fileset>
+            </batchtest>
+            <formatter type="xml"/>
+            <formatter type="plain"/>
+        </junit>
+    </target>
+</project>
